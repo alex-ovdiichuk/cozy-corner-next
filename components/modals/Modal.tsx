@@ -14,7 +14,7 @@ interface ModalProps {
   footer?: React.ReactElement;
   actionLabel: string;
   disabled?: boolean;
-  secondaryAction?: () => void;
+  secondaryAction?: (() => void) | false;
   secondaryActionLabel?: string;
 }
 

@@ -2,12 +2,13 @@
 
 import { AiOutlineMenu } from "react-icons/ai";
 import { Avatar } from "../Avatar";
-import { useState } from "react";
+import { useCallback, useState } from "react";
 import { MenuItem } from "./MenuItem";
 import { useRegisterModal } from "@/hooks/useRegisterModal";
 import { useLoginModal } from "@/hooks/useLoginModal";
 import { User } from "@prisma/client";
 import { signOut } from "next-auth/react";
+import { useRentModal } from "@/hooks/useRentModal";
 
 interface UserMenuProps {
   currentUser: User | null;
@@ -17,15 +18,24 @@ export const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
   const [isOpen, setIsOpen] = useState(false);
   const registerModal = useRegisterModal();
   const loginModal = useLoginModal();
+  const rentModal = useRentModal();
+
+  const onRent = useCallback(() => {
+    if (!currentUser) {
+      return loginModal.onOpen();
+    }
+
+    rentModal.onOpen();
+  }, [currentUser, loginModal, rentModal]);
 
   return (
     <div className="relative">
       <div className="flex flex-row items-center gap-3">
         <button
-          onClick={() => {}}
+          onClick={onRent}
           className="hidden md:block text-sm font-semibold py-3 px-4 rounded-full hover:bg-neutral-100 transition cursor-pointer"
         >
-          Book your home
+          Rent out your home
         </button>
         <button
           onClick={() => setIsOpen((prev) => !prev)}
@@ -46,7 +56,7 @@ export const UserMenu: React.FC<UserMenuProps> = ({ currentUser }) => {
                   <MenuItem onClick={() => {}} label="My Favorites" />
                   <MenuItem onClick={() => {}} label="My Reservations" />
                   <MenuItem onClick={() => {}} label="My Properties" />
-                  <MenuItem onClick={() => {}} label="My cozy home" />
+                  <MenuItem onClick={onRent} label="My cozy home" />
                   <hr />
                   <MenuItem onClick={() => signOut()} label="Logout" />
                 </>
