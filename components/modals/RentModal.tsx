@@ -9,6 +9,7 @@ import { FieldValues, useForm } from "react-hook-form";
 import { CountrySelect } from "../inputs/CountrySelect";
 import { Map } from "../Map";
 import { Counter } from "../inputs/Counter";
+import { ImageUpload } from "../inputs/ImageUpload";
 
 enum STEPS {
   CATEGORY = 0,
@@ -47,6 +48,7 @@ export const RentModal = () => {
   const guestCount = watch("guestCount");
   const roomCount = watch("roomCount");
   const bathroomCount = watch("bathroomCount");
+  const imgSrc = watch("imgSrc");
 
   const setCustomValue = (id: string, value: any) => {
     setValue(id, value, {
@@ -141,6 +143,21 @@ export const RentModal = () => {
           subtitle="How many bathrooms do you have?"
           value={bathroomCount}
           onChange={(value) => setCustomValue("bathroomCount", value)}
+        />
+      </div>
+    );
+  }
+
+  if (step === STEPS.IMAGES) {
+    bodyContent = (
+      <div className="flex flex-col gap-8">
+        <Heading
+          title="Add a photo of your place"
+          subtitle="Show what your place look like"
+        />
+        <ImageUpload
+          value={imgSrc}
+          onChange={(value) => setCustomValue("imgSrc", value)}
         />
       </div>
     );
