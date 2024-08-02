@@ -1,4 +1,5 @@
 import { prismadb } from "@/libs/prismadb";
+import { Listing, Reservation } from "@prisma/client";
 
 export const getReservations = async ({
   listingId,
@@ -34,7 +35,7 @@ export const getReservations = async ({
       },
     });
 
-    return reservations;
+    return reservations as (Reservation & { listing: Listing })[];
   } catch (error: any) {
     throw new Error(error);
   }
