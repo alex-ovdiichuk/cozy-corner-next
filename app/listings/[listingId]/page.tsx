@@ -3,7 +3,6 @@ import { getListingById } from "@/actions/getListingById";
 import { getReservations } from "@/actions/getReservations";
 import { EmptyState } from "@/components/EmptyState";
 import { ListingClient } from "@/components/listings/ListingClient";
-import React from "react";
 
 interface IParams {
   listingId?: string;
